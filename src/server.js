@@ -9,7 +9,7 @@ server.use(helmet())
 server.use(express.json())
 server.use(cors())
 
-const port = 8000;
+const port = 8080;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
 const notionSecret = process.env.NOTION_SECRET;
 
