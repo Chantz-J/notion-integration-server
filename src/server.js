@@ -97,4 +97,4 @@ server.post('/', (req, res) => {
 
 })
 
-server.listen(port, () => console.log(`Server running on http://localhost:${port}`))
+server.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running...`))
