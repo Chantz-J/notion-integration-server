@@ -8,7 +8,7 @@ const server = express()
 server.use(helmet())
 server.use(express.json())
 server.use(cors({
-  origin: ['https://recharge-notion-client.netlify.app']
+  origin: ['https://recharge-notion-client.netlify.app/','https://recharge-notion-client.netlify.app/create-page']
 }))
 
 const port = 8080;
