@@ -7,7 +7,7 @@ const cors = require('cors');
 const server = express()
 server.use(helmet())
 server.use(express.json())
-server.use(cors())
+server.use(cors({origin: '*'}))
 
 const port = 8080;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
