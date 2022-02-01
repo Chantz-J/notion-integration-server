@@ -7,7 +7,9 @@ const cors = require('cors');
 const server = express()
 server.use(helmet())
 server.use(express.json())
-server.use(cors({origin: '*'}))
+server.use(cors({
+  origin: ['https://recharge-notion-client.netlify.app']
+}))
 
 const port = 8080;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
