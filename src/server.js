@@ -7,10 +7,7 @@ const cors = require('cors');
 const server = express();
 server.use(helmet());
 server.use(express.json());
-server.use(cors({
-  origin: ['https://recharge-notion-client.netlify.app/','https://recharge-notion-client.netlify.app/create-page'],
-  methods: ['GET','POST','DELETE','UPDATE','PUT','PATCH']
-}));
+server.use(cors());
 
 const port = 8080;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -24,6 +21,11 @@ const notion = new client_1.Client({
 if (!notionDatabaseId || !notionSecret) {
   throw Error("Must define NOTION_SECRET and NOTION_DATABASE_ID in env");
 }
+
+server.all('*', (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://recharge-notion-client.netlify.app");
+  next();
+});
 
 
 server.get('/', (req, res) => {
