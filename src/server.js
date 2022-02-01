@@ -18,7 +18,7 @@ const notion = new client_1.Client({
     auth: process.env.NOTION_SECRET,
   });
 
-if (!process.env.NOTION_DATABASE_ID || !process.env.NOTION_SECRET) {
+if (!notionDatabaseId || !notionSecret) {
   throw Error("Must define NOTION_SECRET and NOTION_DATABASE_ID in env");
 }
 
@@ -35,7 +35,7 @@ server.post('/', (req, res) => {
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
-        parent: { database_id: process.env.NOTION_DATABASE_ID || '994c24e36390405dbb3a69c044596817' },
+        parent: { database_id: notionDatabaseId || '994c24e36390405dbb3a69c044596817' },
         icon: {
           type: "emoji",
           emoji: emoji || "🎟",
