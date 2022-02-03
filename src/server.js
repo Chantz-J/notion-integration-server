@@ -7,25 +7,31 @@ const cors = require('cors');
 const server = express();
 server.use(helmet());
 server.use(express.json());
-server.use(cors());
 
-const port = 8080;
+const corsOptions ={
+  origin:'http://localhost:3000', 
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+}
+server.use(cors(corsOptions));
+
+const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
 const notionSecret = process.env.NOTION_SECRET;
 
 // Initializing the Notion client with secret
 const notion = new client_1.Client({
-    auth: process.env.NOTION_SECRET,
+    auth: notionSecret,
   });
 
-if (!process.env.NOTION_DATABASE_ID || !process.env.NOTION_SECRET) {
+if (!notionDatabaseId || !notionSecret) {
   throw Error("Must define NOTION_SECRET and NOTION_DATABASE_ID in env");
 }
 
-server.all('*', (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://recharge-notion-client.netlify.app");
-  next();
-});
+// server.all('*', (req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "https://recharge-notion-client.netlify.app");
+//   next();
+// });
 
 
 server.get('/', (req, res) => {
@@ -36,7 +42,7 @@ server.post('/', (req, res) => {
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
-        parent: { database_id: process.env.NOTION_DATABASE_ID || '994c24e36390405dbb3a69c044596817' },
+        parent: { database_id: notionDatabaseId || '994c24e36390405dbb3a69c044596817' },
         icon: {
           type: "emoji",
           emoji: emoji || "🎟",
