@@ -9,12 +9,12 @@ server.use(helmet());
 server.use(express.json());
 
 const corsOptions ={
-  origin:['https://recharge-notion-client.netlify.app/create-page', 'https://recharge-notion-client.netlify.app/'],
+  origin: 'https://recharge-notion-client.netlify.app/',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
   setHeader: 'Access-Control-Allow-Origin',
 }
-server.use(cors(corsOptions));
+server.use(cors());
 
 const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -40,6 +40,9 @@ server.get('/', (req, res) => {
 })
 
 server.post('/', (req, res) => {
+  res.header('Access-Control-Allow-Origin: *');
+  res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
