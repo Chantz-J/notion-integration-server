@@ -9,7 +9,7 @@ server.use(helmet());
 server.use(express.json());
 
 const corsOptions ={
-  origin:'https://recharge-notion-client.netlify.app/create-page', 
+  origin:['https://recharge-notion-client.netlify.app/create-page', 'https://recharge-notion-client.netlify.app/'],
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 }
