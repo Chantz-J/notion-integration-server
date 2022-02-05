@@ -12,9 +12,8 @@ const corsOptions ={
   origin: 'https://recharge-notion-client.netlify.app/',
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
-  setHeader: 'Access-Control-Allow-Origin',
 }
-server.use(cors());
+server.use(cors(corsOptions));
 
 const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -29,10 +28,12 @@ if (!notionDatabaseId || !notionSecret) {
   throw Error("Must define NOTION_SECRET and NOTION_DATABASE_ID in env");
 }
 
-// server.all('*', (req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://recharge-notion-client.netlify.app");
-//   next();
-// });
+ server.all('*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin: *');
+  res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
+   next();
+ });
 
 
 server.get('/', (req, res) => {
@@ -40,9 +41,6 @@ server.get('/', (req, res) => {
 })
 
 server.post('/', (req, res) => {
-  res.header('Access-Control-Allow-Origin: *');
-  res.header('Access-Control-Allow-Methods: GET, POST, PATCH, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
