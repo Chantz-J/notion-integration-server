@@ -8,12 +8,12 @@ const server = express();
 server.use(helmet());
 server.use(express.json());
 
-const corsOptions ={
-  origin: 'https://recharge-notion-client.netlify.app',
-  credentials: true,            //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-}
-server.use(cors(corsOptions));
+// const corsOptions ={
+//   origin: 'https://recharge-notion-client.netlify.app/',
+//   credentials: true,            //access-control-allow-credentials:true
+//   optionSuccessStatus: 200,
+// }
+server.use(cors());
 
 const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -41,6 +41,8 @@ server.get('/', (req, res) => {
 })
 
 server.post('/', (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Content-Type", "application/json");
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
@@ -95,7 +97,7 @@ server.post('/', (req, res) => {
       })
       console.log(response)
       console.log("Success! Entry added.")
-      res.json(`Page Created! ${response[0]}`)
+      res.json(`Page Created! ${response}`)
     } catch (error) {
       console.error(error)
     }
