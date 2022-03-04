@@ -13,21 +13,14 @@ app.use(express.json());
 //   credentials: true,            //access-control-allow-credentials:true
 //   optionSuccessStatus: 200,
 // }
-// app.use(cors(corsOptions));
-const allowedOrigins = ["http://localhost:3000", "https://recharge-notion-client.netlify.app/"];
-app.use(function(req, res, next) {
-  let origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
-  }
+app.use(cors({
+  origin: "*"
+}));
 
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
   next();
 });
-
 
 // const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
