@@ -1,23 +1,25 @@
-const client_1 = require("@notionhq/client");
+const client_1 = require('@notionhq/client');
 require("dotenv").config();
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const server = express();
-server.use(helmet());
-server.use(express.json());
+const app = express();
+app.use(helmet());
+app.use(express.json());
 
 // const corsOptions ={
 //   origin: 'https://recharge-notion-client.netlify.app/',
 //   credentials: true,            //access-control-allow-credentials:true
 //   optionSuccessStatus: 200,
 // }
-server.use(cors());
+// app.use(cors(corsOptions));
+app.set('Access-Control-Allow-Origin', 'https://recharge-notion-client.netlify.app/')
 
-const port = 8000;
+
+// const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
-const notionSecret = process.env.NOTION_SECRET;
+const notionSecret = process.env.NOTION_KEY;
 
 // Initializing the Notion client with secret
 const notion = new client_1.Client({
@@ -29,11 +31,11 @@ if (!notionDatabaseId || !notionSecret) {
 }
 
 
-server.get('/', (req, res) => {
+app.get('/', (req, res) => {
   res.json('Welcome to the Notion Integration!')
 })
 
-server.post('/', (req, res) => {
+app.post('/', (req, res) => {
   async function addPage(pageTitle, emoji, coverUrl, selection, content) {
     try {
        const response = await notion.pages.create({
@@ -73,14 +75,14 @@ server.post('/', (req, res) => {
             object: 'block',
             type: 'paragraph',
             paragraph: {
-              text: [
+              rich_text: [
                 {
                   type: 'text',
                   text: {
                     content: content || 'No page content specified.'
-                  }
+                  },
                 }
-              ]
+              ],
             },
           }
         ]
@@ -104,4 +106,4 @@ server.post('/', (req, res) => {
 
 })
 
-server.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running...`))
+app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running...`))
