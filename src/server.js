@@ -19,7 +19,7 @@ app.set('Access-Control-Allow-Origin', 'https://recharge-notion-client.netlify.a
 
 // const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
-const notionSecret = process.env.NOTION_KEY;
+const notionSecret = process.env.NOTION_SECRET;
 
 // Initializing the Notion client with secret
 const notion = new client_1.Client({
