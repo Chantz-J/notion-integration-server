@@ -14,7 +14,19 @@ app.use(express.json());
 //   optionSuccessStatus: 200,
 // }
 // app.use(cors(corsOptions));
-app.set('Access-Control-Allow-Origin', 'https://recharge-notion-client.netlify.app/')
+const allowedOrigins = ["http://localhost:3000", "https://recharge-notion-client.netlify.app/"];
+app.use(function(req, res, next) {
+  let origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.header("Access-Control-Allow-Origin", origin); // restrict it to the required domain
+  }
+
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 
 // const port = 8000;
