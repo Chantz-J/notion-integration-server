@@ -13,14 +13,14 @@ app.use(express.json());
 //   credentials: true,            //access-control-allow-credentials:true
 //   optionSuccessStatus: 200,
 // }
-app.use(cors({
-  origin: "*"
-}));
+// app.use(cors({
+//   origin: "*"
+// }));
 
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   next();
+// });
 
 // const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -111,4 +111,4 @@ app.post('/', (req, res) => {
 
 })
 
-app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running...`))
+app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running... Token is${process.env.NOTION_SECRET}, Database Id is ${proces.env.NOTION_DATABASE_ID}`))
