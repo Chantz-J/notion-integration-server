@@ -8,17 +8,17 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-const corsOptions ={
-  origin: 'https://recharge-notion-client.netlify.app/',
-  credentials: true,            //access-control-allow-credentials:true
-  optionSuccessStatus: 200,
-}
-app.use(cors(corsOptions));
+// const corsOptions ={
+//   origin: 'https://recharge-notion-client.netlify.app/',
+//   credentials: true,            //access-control-allow-credentials:true
+//   optionSuccessStatus: 200,
+// }
+// app.use(cors(corsOptions));
 
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   next();
-// });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
 
 // const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -109,4 +109,4 @@ app.post('/', (req, res) => {
 
 })
 
-app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running... Token is${process.env.NOTION_SECRET}, Database Id is ${process.env.NOTION_DATABASE_ID}`))
+app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running... Token is ${process.env.NOTION_SECRET}, Database Id is ${process.env.NOTION_DATABASE_ID}`))
