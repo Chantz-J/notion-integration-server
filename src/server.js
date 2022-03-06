@@ -111,4 +111,4 @@ app.post('/', (req, res) => {
 
 })
 
-app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running... Token is${process.env.NOTION_SECRET}, Database Id is ${proces.env.NOTION_DATABASE_ID}`))
+app.listen(process.env.PORT || 8080, () => console.log(`Notion Integration Server running... Token is${process.env.NOTION_SECRET}, Database Id is ${process.env.NOTION_DATABASE_ID}`))
