@@ -8,14 +8,12 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-// const corsOptions ={
-//   origin: 'https://recharge-notion-client.netlify.app/',
-//   credentials: true,            //access-control-allow-credentials:true
-//   optionSuccessStatus: 200,
-// }
-// app.use(cors({
-//   origin: "*"
-// }));
+const corsOptions ={
+  origin: 'https://recharge-notion-client.netlify.app/',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+}
+app.use(cors(corsOptions));
 
 // app.use(function (req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
