@@ -1,4 +1,18 @@
 const router = require('express').Router();
+const client_1 = require('@notionhq/client');
+
+// const port = 8000;
+const notionDatabaseId = process.env.NOTION_DATABASE_ID;
+const notionSecret = process.env.NOTION_SECRET;
+
+// Initializing the Notion client with secret
+const notion = new client_1.Client({
+    auth: notionSecret,
+  });
+
+if (!notionDatabaseId || !notionSecret) {
+  throw Error("Must define NOTION_SECRET and NOTION_DATABASE_ID in env");
+}
 
 router.post('/', (req, res) => {
     async function addPage(pageTitle, emoji, coverUrl, selection, content) {
