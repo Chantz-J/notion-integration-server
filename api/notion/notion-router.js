@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const client_1 = require('@notionhq/client');
+const { v4: uuidv4 } = require('uuid');
 
 // const port = 8000;
 const notionDatabaseId = process.env.NOTION_DATABASE_ID;
@@ -48,6 +49,7 @@ router.post('/', (req, res) => {
             },
   
           },
+          
   
           children: [
             {
@@ -69,8 +71,7 @@ router.post('/', (req, res) => {
         })
         console.log(response)
         console.log("Success! Entry added.")
-        const { object } = response
-        res.json(`Page Created! ${object}`)
+        res.json(`Page Created! ${response}`)
       } catch (error) {
         console.error(error)
       }
